@@ -1,7 +1,7 @@
 import * as React from 'react'
 import getWeatherForecast from "../lib/weather";
 
-export const WeatherContext = React.createContext(null)
+export const WeatherContext = React.createContext({})
 
 interface IWeatherContextProps {
     apiKey: string,
@@ -17,7 +17,7 @@ const ContextProvider = ({ children, apiKey, id }: IWeatherContextProps): JSX.El
         setWeather(res);
     }
 
-    return <>{children}</>;
+    return <WeatherContext.Provider value={{weather, setWeather}} >{children}</WeatherContext.Provider>;
 }
 
 export default ContextProvider
