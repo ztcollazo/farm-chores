@@ -89,3 +89,6 @@ package-lock.json
 
 # Electron-Forge
 out/
+
+# PostCSS output
+src/style/main.css
