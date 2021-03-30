@@ -2,11 +2,19 @@ interface IWeatherForecastOptions {
     apiKey: string,
     lat: number,
     long: number,
-    id: number
 }
 
-export const getWeatherForecast = ({ lat, long, apiKey, id }: IWeatherForecastOptions): Promise<ReadableStream<Uint8Array>> => {
-    return fetch(`http://api.openweathermap.org/data/2.5/forecast?id=${id}&appid=${apiKey}&lat=${lat}&lon=${long}`).then(res => res.body);
+export const getWeatherForecast = async ({ lat, long, apiKey }: IWeatherForecastOptions): Promise<unknown> => {
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?appid=${apiKey}&lat=${lat}&lon=${long}`);
+    const json = await res.json();
+    return json;
 }
 
-export default getWeatherForecast;
+export const kelvinToFahr = (kelvin: number): number => {
+    return ((kelvin - 273.15) * 1.8) + 32;
+}
+
+export default {
+    getWeatherForecast,
+    kelvinToFahr
+};
