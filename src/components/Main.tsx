@@ -1,14 +1,11 @@
 import * as React from "react";
-import ContextProvider from "./Context";
+import Weather from "./Weather";
 
 const Main = (): JSX.Element => {
     return (
-        <ContextProvider id={Number(process.env.ID)} apiKey={process.env.WEATHER_API_KEY}>
-            <h1>Hello, React + Electron Forge</h1>
-            <p>
-                Meet the new combo. Typescript, Webpack, and ESLint Included
-            </p>
-        </ContextProvider>
+        <div className="absolute -inset-0 bg-gradient-to-tr from-red-600 to-blue-600">
+            <Weather />
+        </div>
     )
 }
 
