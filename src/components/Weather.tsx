@@ -1,4 +1,5 @@
 import * as React from "react";
+import Card from "./Card";
 // import { useAsyncFn, useGeolocation } from "react-use";
 // import { getWeatherForecast, kelvinToFahr } from "../lib/weather";
 
@@ -11,8 +12,8 @@ const Weather: React.FC = (): JSX.Element => {
     // console.log(weather);
 
     return (
-        <div className="relative p-3 mx-5 my-3 bg-black bg-opacity-30 rounded-xl shadow-2xl flex">
-            <img src={`http://openweathermap.org/img/wn/04d@2x.png`} alt="Weather image" />
+        <Card>
+            <img src={`https://openweathermap.org/img/wn/04d@2x.png`} alt="Weather image" />
             <div className="flex flex-col">
                 <h1 className="text-5xl font-extralight text-white text-opacity-30">{70}°</h1>
                 <h1 className="text-3xl font-extralight text-white text-opacity-30">{45}°</h1>
@@ -33,7 +34,7 @@ const Weather: React.FC = (): JSX.Element => {
                     ))
                 }
             </div>
-        </div>
+        </Card>
     );
 }
 
