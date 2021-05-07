@@ -3,6 +3,7 @@
     "jsx": "react",
     "allowJs": true,
     "module": "commonjs",
+    "target": "es6",
     "skipLibCheck": true,
     "esModuleInterop": true,
     "noImplicitAny": true,
@@ -12,10 +13,15 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "paths": {
-      "*": ["node_modules/*"]
-    }
+      "*": ["./node_modules/*", "./src/lib/*"]
+    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./typedefs"
+    ]
   },
   "include": [
-    "src/**/*"
+    "./src/**/*",
+    "./typedefs/**/*"
   ]
 }

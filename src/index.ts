@@ -14,7 +14,8 @@ const createWindow = (): void => {
     resizable: true,
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    title: "Farm Chores Manager"
   });
 
   // and load the index.html of the app.

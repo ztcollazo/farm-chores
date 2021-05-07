@@ -763,6 +763,10 @@ module.exports = {
     divideOpacity: ['responsive', 'dark'],
     divideStyle: ['responsive'],
     divideWidth: ['responsive'],
+    extend: {
+      backgroundColor: ['checked'],
+      borderColor: ['checked']
+    },
     fill: ['responsive'],
     flex: ['responsive'],
     flexDirection: ['responsive'],
