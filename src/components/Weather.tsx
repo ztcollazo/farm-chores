@@ -24,10 +24,10 @@ const Weather: React.FC = (): JSX.Element => {
                         <div key={i} className="flex flex-col mx-3">
                             <h1 className="font-extralight text-2xl text-white text-opacity-30">Some Day</h1>
                             <div className="flex flex-row">
-                                <img className="w-16 h-16" src={`http://openweathermap.org/img/wn/04d@2x.png`} alt="Weather image" />
+                                <img className="w-16 h-16" src={`https://openweathermap.org/img/wn/04d@2x.png`} alt="Weather image" />
                                 <div className="flex flex-col">
                                     <h1 className="font-extralight text-2xl text-white text-opacity-30">{68}°</h1>
-                                    <h1 className="font-extralight text-xl text-white text-opacity-30">{34}°</h1> 
+                                    <h1 className="font-extralight text-xl text-white text-opacity-30">{34}°</h1>
                                 </div>
                             </div>
                         </div>
