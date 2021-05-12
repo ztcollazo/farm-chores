@@ -10,8 +10,7 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts .",
-    "watch:css": "postcss src/style/tailwind.css -o src/style/main.css",
-    "postinstall": "pip3 install -r requirements.txt"
+    "watch:css": "postcss src/style/tailwind.css -o src/style/main.css"
   },
   "keywords": [],
   "author": "collazo",
@@ -76,7 +75,9 @@
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "autoprefixer": "^10.2.5",
-    "css-loader": "^4.3.0",
+    "copy-webpack-plugin": "^6.4.1",
+    "css-loader": "^5.2.4",
+    "dotenv-webpack": "^7.0.2",
     "electron": "12.0.1",
     "eslint": "^7.22.0",
     "eslint-import-resolver-webpack": "^0.13.0",
@@ -92,7 +93,8 @@
   "dependencies": {
     "@emotion/react": "^11.1.5",
     "@ericz1803/react-google-calendar": "^4.1.0",
-    "dotenv-webpack": "^7.0.2",
+    "debug": "^4.3.1",
+    "electron-oauth-helper": "^5.1.1",
     "electron-squirrel-startup": "^1.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

@@ -36,7 +36,7 @@ const styles = {
 const CalendarComponent: React.FC = (): JSX.Element => {
     return (
         <Card className="w-2/3 h-auto">
-            <Calendar styles={styles} showFooter={false} />
+            <Calendar calendars={[]} apiKey={""} styles={styles} showFooter={false} />
         </Card>
     );
 }
