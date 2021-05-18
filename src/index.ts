@@ -11,7 +11,9 @@ const createWindow = (): void => {
   const mainWindow = new BrowserWindow({
     resizable: true,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true
     },
     title: "Farm Chores Manager"
   });
