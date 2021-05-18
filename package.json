@@ -93,11 +93,9 @@
   "dependencies": {
     "@emotion/react": "^11.1.5",
     "@ericz1803/react-google-calendar": "^4.1.0",
-    "debug": "^4.3.1",
     "electron-squirrel-startup": "^1.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-electron-web-view": "^2.0.1",
     "react-use": "^17.2.1",
     "tailwindcss": "^2.0.4"
   }
