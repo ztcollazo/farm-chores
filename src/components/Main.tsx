@@ -13,11 +13,25 @@ const Main = (): JSX.Element => {
 
     return (
         <TrelloContext.Provider value={{token, setToken, key, setKey, trelloInstance, setTrelloInstance}}>
-            <div className="absolute flex flex-col w-full h-full bg-gradient-to-tr from-red-600 to-blue-600">
-                <Weather />
-                <div className="flex flex-row w-full h-full">
-                    <Todo />
-                    <Calendar />
+            <div id={"container"} className="absolute flex flex-col w-full h-auto bg-gradient-to-tr from-red-600 to-blue-600 wrapper">
+                <div id="1" className="child">
+                    <Weather />
+                    <div className="flex flex-row w-full h-full">
+                        <Todo />
+                        <Calendar />
+                    </div>
+                </div>
+                {/*
+                    Add this for testing purposes. Once I get the other
+                    components in, I'll switch those out. Just had to get the scroll
+                    snap 😉
+                */}
+                <div id="2" className="child">
+                    <Weather />
+                    <div className="flex flex-row w-full h-full">
+                        <Todo />
+                        <Calendar />
+                    </div>
                 </div>
             </div>
         </TrelloContext.Provider>
