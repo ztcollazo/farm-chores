@@ -119,8 +119,8 @@ let readStorage: CallableFunction; // eslint-disable-line @typescript-eslint/no-
 let writeStorage: CallableFunction; // eslint-disable-line @typescript-eslint/no-empty-function
 
 const parseRestArgs = function (...args: any[]) {
-    const [method, ...rest] = args[0];
-    let [path, params, success, error] = rest;
+    const [method, path, ...rest] = args;
+    let [params, success, error] = rest;
     if (isFunction(params)) {
         error = success;
         success = params;
@@ -128,7 +128,7 @@ const parseRestArgs = function (...args: any[]) {
     }
 
     // Get rid of any leading
-    path = path.replace(new RegExp(`^/*`), '');
+    // path = path.replace(new RegExp(`^/*`), '');
 
     return [method, path, params, success, error];
 };
@@ -189,42 +189,47 @@ class Trello {
         this.args = args;
         this.del = this.delete;
         this.baseURL = `${apiEndpoint}/${version}/`
-        this.actions = {
-            get(id: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) {
-                return this.get(`actions/${id}`, params, success, error);
-            }
-        };
-        this.cards = {
-            get(id: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) {
-                return this.get(`cards/${id}`, params, success, error);
-            }
-        };
-        this.checklists = {
-            get(id: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) {
-                return this.get(`checklists/${id}`, params, success, error);
-            }
-        };
-        this.boards = {
-            get(id: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) {
-                return this.get(`boards/${id}`, params, success, error);
-            }
-        };
-        this.lists = {
-            get(id: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) {
-                return this.get(`lists/${id}`, params, success, error);
-            }
-        }
-        this.members = {
-            get(id: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) {
-                return this.get(`members/${id}`, params, success, error);
-            }
-        }
-        this.organizations = {
-            get(id: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) {
-                return this.get(`organizations/${id}`, params, success, error);
-            }
-        }
+        // TODO: fix all of this nonsense.
+        // this.actions = {
+        //     get(id: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) {
+        //         return this.get(`actions/${id}`, params, success, error);
+        //     }
+        // };
+        // this.cards = {
+        //     get(id: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) {
+        //         return this.get(`cards/${id}`, params, success, error);
+        //     }
+        // };
+        // this.checklists = {
+        //     get(id: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) {
+        //         return this.get(`checklists/${id}`, params, success, error);
+        //     }
+        // };
+        // this.boards = {
+        //     get(id: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) {
+        //         return this.get(`boards/${id}`, params, success, error);
+        //     }
+        // };
+        // this.lists = {
+        //     get(id: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) {
+        //         return this.get(`lists/${id}`, params, success, error);
+        //     }
+        // }
+        // this.members = {
+        //     get(id: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) {
+        //         return this.get(`members/${id}`, params, success, error);
+        //     }
+        // }
+        // this.organizations = {
+        //     get(id: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) {
+        //         return this.get(`organizations/${id}`, params, success, error);
+        //     }
+        // }
     }
+    // FIXME throws Error: [object Object is not a valid HTTP method.
+    // getAllBoards<T, A>(params: Record<string, unknown>, success: CallableFunction, error: CallableFunction): Promise<A> {
+    //     return this.get<T, A>({path: 'members/me/boards', params, success, error})
+    // }
     authorizeURL(args: Record<string, any>): string {
         const baseArgs: {response_type: string, key: string} = {
             response_type: 'token',
