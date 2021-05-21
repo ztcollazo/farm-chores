@@ -19,3 +19,7 @@ export const TrelloContext = createContext<ITrelloContext>({
     trelloInstance: null,
     setTrelloInstance() {}
 });
+
+export const todoBoardId = process.env.TODO_BOARD_ID;
+export const todoListId = process.env.TODO_LIST_ID;
+export const doneListId = process.env.DONE_LIST_ID;
