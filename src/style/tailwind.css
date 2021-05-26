@@ -10,6 +10,7 @@ body::-webkit-scrollbar {
 .child {
     scroll-snap-align: start;
     scroll-snap-stop: always;
+    @apply relative flex flex-col w-full h-full;
 }
 
 html {
