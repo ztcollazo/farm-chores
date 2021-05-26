@@ -221,6 +221,9 @@ class Trello {
     updateCard(cardId: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) {
         return this.put({path: `cards/${cardId}`, params, success, error});
     }
+    getCardChecklists(cardId: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) {
+        return this.get({path: `cards/${cardId}/checklists`, params, success, error});
+    }
     authorizeURL(args: Record<string, any>): string {
         const baseArgs: {response_type: string, key: string} = {
             response_type: 'token',
