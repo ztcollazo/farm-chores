@@ -3,7 +3,7 @@ import Card from "./Card";
 // import { useAsyncFn, useGeolocation } from "react-use";
 // import { getWeatherForecast, kelvinToFahr } from "../lib/weather";
 
-const Weather: React.FC = (): JSX.Element => {
+const Weather: React.FC = () => {
     // const { latitude: lat, longitude: long } = useGeolocation();
     // const [weather, setWeather] = React.useState(null);
     // const [state, get] = useAsyncFn(getWeatherForecast)

@@ -33,7 +33,7 @@ const styles = {
     `
 }
 
-const CalendarComponent: React.FC = (): JSX.Element => {
+const CalendarComponent: React.FC = () => {
     return (
         <Card className="w-2/3 h-auto">
             <Calendar calendars={[]} apiKey={""} styles={styles} showFooter={false} />
