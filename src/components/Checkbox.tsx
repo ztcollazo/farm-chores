@@ -15,7 +15,7 @@ const Checkbox: React.FC<ICheckboxProps> = ({onChange, children, checked}) => {
                     onChange={onChange}
                     checked={checked}
                 />
-                &nbsp;&nbsp;&nbsp;{children}
+                {!checked ? <span className="ml-4">{children}</span> : <s className="ml-4">{children}</s>}
             </label>
         </li>
     );
