@@ -4,7 +4,7 @@ interface IWeatherForecastOptions {
     long: number,
 }
 
-export const getWeatherForecast = async ({ lat, long, apiKey }: IWeatherForecastOptions): Promise<unknown> => {
+export const getWeatherForecast = async ({ lat, long, apiKey }: IWeatherForecastOptions): Promise<any> => {
     const res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?appid=${apiKey}&lat=${lat}&lon=${long}`);
     const json = await res.json();
     return json;
