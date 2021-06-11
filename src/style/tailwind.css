@@ -7,10 +7,19 @@ body::-webkit-scrollbar {
     display: none;
 }
 
-.child {
+.scroll-snap-child {
     scroll-snap-align: start;
     scroll-snap-stop: always;
-    @apply relative flex flex-col w-full h-full;
+    /* @apply relative flex flex-col w-full; */
+}
+
+.scrollbar-none::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll-snap-parent {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
 }
 
 html {

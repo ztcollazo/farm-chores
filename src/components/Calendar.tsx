@@ -23,7 +23,7 @@ const styles = {
       }
     `,
     day: css`
-      border: 1px solid ${colors.gray};
+      border: 1px solid ${colors.gray['400']};
       padding: 0px;
       height: 85px;
     `,
@@ -36,7 +36,7 @@ const styles = {
 const CalendarComponent: React.FC = () => {
     return (
         <Card className="w-2/3 h-auto">
-            <Calendar calendars={[]} apiKey={""} styles={styles} showFooter={false} />
+            <Calendar calendars={[{calendarId: process.env.CALENDAR_ID, color: colors.blue['500']}]} apiKey={process.env.GOOGLE_API_KEY} styles={styles} showFooter={false} />
         </Card>
     );
 }
