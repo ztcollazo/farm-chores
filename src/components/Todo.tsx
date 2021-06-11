@@ -1,6 +1,5 @@
 import * as React from "react";
 import Card from "./Card";
-import Trello from "../lib/trello-api";
 import {doneListId, todoBoardId, todoListId, TrelloContext} from "./context";
 import Checkbox from "./Checkbox";
 import {authorize} from "./helpers";

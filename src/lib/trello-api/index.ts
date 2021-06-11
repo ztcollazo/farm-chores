@@ -281,6 +281,10 @@ class Trello {
         this.__token = newToken;
     }
 
+    get tokenFound(): boolean {
+        return !!readStorage("token");
+    }
+
     /**
      * Issue a REST call to the API
      *
