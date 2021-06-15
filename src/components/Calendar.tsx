@@ -13,8 +13,6 @@ const styles = {
       align-content: start;
       .calendar-body {
         width: 100%;
-        display: grid;
-        grid-template-columns: repeat(7, auto);
         grid-template-rows: auto;
         grid-auto-rows: auto;
         .day-name {
@@ -25,7 +23,8 @@ const styles = {
     day: css`
       border: 1px solid ${colors.gray['400']};
       padding: 0px;
-      height: 85px;
+      min-height: max-content;
+      height: 86px;
     `,
     today: css`
       font-weight: bolder;
@@ -36,7 +35,7 @@ const styles = {
 const CalendarComponent: React.FC = () => {
     return (
         <Card className="w-2/3 h-auto">
-            <Calendar calendars={[{calendarId: process.env.CALENDAR_ID, color: colors.blue['500']}]} apiKey={process.env.GOOGLE_API_KEY} styles={styles} showFooter={false} />
+            <Calendar calendars={[{calendarId: "09opmkrjova8h5k5k46fedmo88@group.calendar.google.com", color: colors.blue['500']}]} apiKey={process.env.GOOGLE_API_KEY} styles={styles} showFooter={false} />
         </Card>
     );
 }
