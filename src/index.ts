@@ -21,8 +21,7 @@ const createWindow = (): void => {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-  // In production: mainWindow.setMenuBarVisibility(false);
+  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY, {userAgent: 'Chrome'});
 };
 
 // This method will be called when Electron has finished
