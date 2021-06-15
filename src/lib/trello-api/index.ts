@@ -148,10 +148,6 @@ if (window.localStorage != null) {
     writeStorage = (): void => null;
 }
 
-interface ICollections {
-    get: (id: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) => unknown;
-}
-
 /**
  * The `Trello` class.
  *
@@ -168,13 +164,6 @@ class Trello {
     readonly __version: number;
     del: (...args: unknown[]) => unknown;
     args: ITrelloParams;
-    actions: ICollections;
-    cards: ICollections;
-    checklists: ICollections;
-    boards: ICollections;
-    lists: ICollections;
-    members: ICollections;
-    organizations: ICollections;
     constructor({version = 1, apiEndpoint = "https://api.trello.com", authEndpoint = "https://trello.com", key, token}: ITrelloParams) {
         const args = {version, apiEndpoint, authEndpoint, key, token};
 
@@ -223,6 +212,9 @@ class Trello {
     }
     getCardChecklists(cardId: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) {
         return this.get({path: `cards/${cardId}/checklists`, params, success, error});
+    }
+    updateCheckItem(cardId: string, checklistId: string, checkItemId: string, params: Record<string, unknown>, success: CallableFunction, error: CallableFunction) {
+        return this.put({path: `cards/${cardId}/checklist/${checklistId}/checkItem/${checkItemId}/state`, params, success, error});
     }
     authorizeURL(args: Record<string, any>): string {
         const baseArgs: {response_type: string, key: string} = {
