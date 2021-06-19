@@ -18,7 +18,7 @@ const createWindow = (): void => {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
     },
     title: "Farm Chores Manager",
-    kiosk: true
+    icon: "/static/icon.png"
   });
 
   // and load the index.html of the app.
