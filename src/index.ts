@@ -22,6 +22,7 @@ const createWindow = (): void => {
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY, {userAgent: 'Chrome'});
+  mainWindow.on('page-title-updated', (e) => e.preventDefault());
 };
 
 // This method will be called when Electron has finished

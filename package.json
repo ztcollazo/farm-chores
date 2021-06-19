@@ -1,6 +1,6 @@
 {
   "name": "farm-chores",
-  "productName": "farm-chores",
+  "productName": "Farm Chores Manager",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": ".webpack/main",
