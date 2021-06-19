@@ -95,7 +95,6 @@
     "webpack": "^5.0"
   },
   "dependencies": {
-    "@electron/remote": "^1.1.0",
     "@emotion/react": "^11.1.5",
     "@ericz1803/react-google-calendar": "^4.1.0",
     "@tailwindcss/forms": "^0.3.2",

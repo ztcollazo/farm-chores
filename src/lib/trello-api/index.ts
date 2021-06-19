@@ -1,6 +1,6 @@
 'use strict';
-
-import {dialog, BrowserWindow} from "@electron/remote";
+import {remote} from "electron";
+const {BrowserWindow, dialog} = remote;
 
 /**
  * Trello client.js, rewritten in TypeScript.
