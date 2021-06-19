@@ -17,7 +17,8 @@ const createWindow = (): void => {
       enableRemoteModule: true,
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
     },
-    title: "Farm Chores Manager"
+    title: "Farm Chores Manager",
+    kiosk: true
   });
 
   // and load the index.html of the app.
