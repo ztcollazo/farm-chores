@@ -26,3 +26,6 @@ html {
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button { margin-left: 10px; }

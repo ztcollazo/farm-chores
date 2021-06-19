@@ -19,6 +19,23 @@ interface ITodoContext {
     setTodos: React.Dispatch<React.SetStateAction<Record<string, unknown>[]>>
 }
 
+interface IGoogleOauthContext {
+    key: string,
+    token: string,
+    setKey: React.Dispatch<React.SetStateAction<string>>,
+    setToken: React.Dispatch<React.SetStateAction<string>>,
+    secret: string,
+    setSecret: React.Dispatch<React.SetStateAction<string>>,
+    scope: string,
+    setScope: React.Dispatch<React.SetStateAction<string>>,
+    refreshToken: string,
+    setRefreshToken: React.Dispatch<React.SetStateAction<string>>,
+    expiryDate: number,
+    setExpiryDate: React.Dispatch<React.SetStateAction<number>>,
+    tokens: Record<string, any>,
+    setTokens: React.Dispatch<React.SetStateAction<Record<string, any>>>
+}
+
 export const TrelloContext = createContext<ITrelloContext>({
     token: "",
     setToken() {},
@@ -34,6 +51,23 @@ export const TodoContext = createContext<ITodoContext>({
     todos: [],
     setTodos() {}
 });
+
+export const GoogleOauthContext = createContext<IGoogleOauthContext>({
+    key: "",
+    token: "",
+    setKey() {},
+    setToken() {},
+    secret: "",
+    setSecret() {},
+    scope: "",
+    setScope() {},
+    refreshToken: "",
+    setRefreshToken() {},
+    expiryDate: null,
+    setExpiryDate() {},
+    tokens: {},
+    setTokens() {}
+})
 
 export const todoBoardId = process.env.TODO_BOARD_ID;
 export const todoListId = process.env.TODO_LIST_ID;
