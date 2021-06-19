@@ -300,7 +300,7 @@ class Trello {
             type: method,
             data: {} as Record<string, string>,
             success,
-            error,
+            error
         };
 
         // Only include the key if it's been set to something truthy
@@ -347,21 +347,21 @@ class Trello {
             width: 600,
             height: 800,
             webPreferences: {
-                nodeIntegration: true,
+                nodeIntegration: false,
                 enableRemoteModule: true,
-                contextIsolation: false
+                contextIsolation: true
             }
         });
         authWindow.loadURL(this.authorizeURL({
             ...config,
-            redirect_uri: "http://localhost:3000/main_window",
+            return_url: "http://localhost:3000/main_window",
             callback_method: "fragment",
             response_type: "token"
-        }));
+        }), {userAgent: 'Chrome'});
         authWindow.show();
 
         const handleRedirect = (url: string) => {
-            const raw_code = /token=([^&]+)/.exec(url) || null;
+            const raw_code = url.includes("localhost:3000") ? /token=([^&]+)/.exec(url) : null;
             const code = raw_code && raw_code.length > 1 ? raw_code[1] : null;
             const error = !url.includes("https://trello.com/1/authorize") ? /error=(.+)$/.exec(url) : undefined;
 
@@ -406,7 +406,7 @@ class Trello {
         const left = window.screenX + (window.innerWidth - width) / 2;
         const top = window.screenY + (window.innerHeight - height) / 2;
 
-        const originMatch = new RegExp(`^[a-z]+://[^/]*`).exec(window.location as unknown as string);
+        const originMatch = new RegExp(`^[a-z]+://[^/]*`).exec(window.location.href);
         const origin = originMatch && originMatch[0];
         const authWindow = window.open(
             this.authorizeURL({
@@ -415,10 +415,10 @@ class Trello {
                 scope: authorizeOpts.scope,
                 expiration: authorizeOpts.expiration,
                 name: authorizeOpts.name,
-                response_type: 'fragment'
+                response_type: 'token'
             }),
             'trello',
-            `width=${width},height=${height},left=${left},top=${top}`
+            `width=${width},height=${height},left=${left},top=${top},contextIsolation=true,nodeIntegration=no`
         );
 
         const receiveMessage =  (event: Record<string, any>) => {
@@ -539,13 +539,13 @@ class Trello {
             default:
                 // We're leaving the current page now; but the user should be calling
                 // .authorize({ interactive: false }) on page load
-                window.location = this.authorizeURL({
-                    redirect_uri: window.location.href,
+                window.location.href = this.authorizeURL({
+                    return_url: window.location.href,
                     callback_method: 'fragment',
                     scope,
                     expiration: authorizeOpts.expiration,
                     name: authorizeOpts.name,
-                }) as unknown as Location;
+                });
         }
     }
 
