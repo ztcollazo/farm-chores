@@ -1,6 +1,6 @@
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const Dotenv = require("dotenv-webpack");
-// const CopyWebpackPlugin = require("copy-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 // const path = require("path");
 
 module.exports = [
@@ -8,4 +8,11 @@ module.exports = [
       async: false
     }),
     new Dotenv(),
+    new CopyWebpackPlugin({
+        patterns: [{
+            from: "./src/assets",
+            to: "assets"
+        }]
+    })
+
 ];

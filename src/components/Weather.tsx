@@ -62,7 +62,7 @@ const Weather: React.FC = () => {
                 {
                     state.value.daily.slice(1).map((temp: Record<string, any>, i: number) => (
                         <div key={i} className="flex flex-col mx-3">
-                            <h1 className="font-extralight text-2xl text-white opacity-60">{getDayOfWeekFromNum(addLoop(today, i, 7))}</h1>
+                            <h1 className="font-extralight text-2xl text-white text-center opacity-60">{getDayOfWeekFromNum(addLoop(today, i + 1, 7))}</h1>
                             <div className="flex flex-row">
                                 <img className="w-16 h-16" src={`https://openweathermap.org/img/wn/${temp.weather[0].icon}@2x.png`} alt="Weather image" />
                                 <div className="flex flex-col">
