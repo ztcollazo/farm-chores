@@ -55,19 +55,19 @@ const Weather: React.FC = () => {
         <Card style={{height: 120}}>
             <img src={`https://openweathermap.org/img/wn/${state.value.daily[0].weather[0].icon}@2x.png`} alt="Weather image" />
             <div className="flex flex-col">
-                <h1 className="text-5xl font-extralight text-white text-opacity-30">{Math.round(kelvinToFahr(state.value.daily[0].temp.max))}°</h1>
-                <h1 className="text-3xl font-extralight text-white text-opacity-30">{Math.round(kelvinToFahr(state.value.daily[0].temp.min))}°</h1>
+                <h1 className="text-5xl font-extralight text-white opacity-60">{Math.round(kelvinToFahr(state.value.daily[0].temp.max))}°</h1>
+                <h1 className="text-3xl font-extralight text-white opacity-60">{Math.round(kelvinToFahr(state.value.daily[0].temp.min))}°</h1>
             </div>
             <div className="flex flex-row right-4 absolute">
                 {
                     state.value.daily.slice(1).map((temp: Record<string, any>, i: number) => (
                         <div key={i} className="flex flex-col mx-3">
-                            <h1 className="font-extralight text-2xl text-white text-opacity-30">{getDayOfWeekFromNum(addLoop(today, i, 7))}</h1>
+                            <h1 className="font-extralight text-2xl text-white opacity-60">{getDayOfWeekFromNum(addLoop(today, i, 7))}</h1>
                             <div className="flex flex-row">
                                 <img className="w-16 h-16" src={`https://openweathermap.org/img/wn/${temp.weather[0].icon}@2x.png`} alt="Weather image" />
                                 <div className="flex flex-col">
-                                    <h1 className="font-extralight text-2xl text-white text-opacity-30">{Math.round(kelvinToFahr(temp.temp.max))}°</h1>
-                                    <h1 className="font-extralight text-xl text-white text-opacity-30">{Math.round(kelvinToFahr(temp.temp.min))}°</h1>
+                                    <h1 className="font-extralight text-2xl text-white opacity-60">{Math.round(kelvinToFahr(temp.temp.max))}°</h1>
+                                    <h1 className="font-extralight text-xl text-white opacity-60">{Math.round(kelvinToFahr(temp.temp.min))}°</h1>
                                 </div>
                             </div>
                         </div>
