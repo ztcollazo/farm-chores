@@ -35,7 +35,7 @@ const styles = {
 const CalendarComponent: React.FC = () => {
     return (
         <Card className="w-2/3 h-auto">
-            <Calendar calendars={[{calendarId: "09opmkrjova8h5k5k46fedmo88@group.calendar.google.com", color: colors.blue['500']}]} apiKey={process.env.GOOGLE_API_KEY} styles={styles} showFooter={false} />
+            <Calendar calendars={[{calendarId: process.env.CALENDAR_ID, color: colors.blue['500']}]} apiKey={process.env.GOOGLE_API_KEY} styles={styles} showFooter={false} />
         </Card>
     );
 }
