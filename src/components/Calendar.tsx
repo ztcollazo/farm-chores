@@ -2,14 +2,13 @@ import * as React from "react";
 import Card from "./Card";
 import Calendar from "@ericz1803/react-google-calendar";
 import { css } from "@emotion/react";
-import colors from "tailwindcss/colors";
 
 const styles = {
     calendar: css`
       width: 100%;
       height: auto;
-      color: ${colors.white};
-      border: 2px solid ${colors.gray};
+      color: white;
+      border: 2px solid auto;
       align-content: start;
       .calendar-body {
         width: 100%;
@@ -21,7 +20,7 @@ const styles = {
       }
     `,
     day: css`
-      border: 1px solid ${colors.gray['400']};
+      border: 1px solid auto;
       padding: 0px;
       min-height: max-content;
       height: 86px;
@@ -35,7 +34,7 @@ const styles = {
 const CalendarComponent: React.FC = () => {
     return (
         <Card className="w-2/3 h-auto">
-            <Calendar calendars={[{calendarId: process.env.CALENDAR_ID, color: colors.blue['500']}]} apiKey={process.env.GOOGLE_API_KEY} styles={styles} showFooter={false} />
+            <Calendar calendars={[{calendarId: process.env.CALENDAR_ID}]} apiKey={process.env.GOOGLE_API_KEY} styles={styles} showFooter={false} />
         </Card>
     );
 }

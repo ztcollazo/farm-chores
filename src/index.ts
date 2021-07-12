@@ -22,6 +22,9 @@ const createWindow = (): void => {
   });
 
   // and load the index.html of the app.
+  if (process.env.NODE_ENV === "production") {
+    mainWindow.setMenuBarVisibility(false);
+  }
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY, {userAgent: 'Chrome'});
   mainWindow.on('page-title-updated', (e) => e.preventDefault());
 };
