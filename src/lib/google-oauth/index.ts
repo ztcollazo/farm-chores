@@ -6,18 +6,28 @@ import qs from "querystring"
 const GOOGLE_AUTHORIZATION_URL = 'https://accounts.google.com/o/oauth2/v2/auth'
 const GOOGLE_TOKEN_URL = 'https://www.googleapis.com/oauth2/v4/token'
 
-export function googleSignIn (redirectUri: string, clientId: string, clientSecret: string): Promise<Record<string, any>> {
+export function googleSignIn (redirectUri: string, clientId: string, clientSecret: string, refresh: string = null): Promise<Record<string, any>> {
     return new Promise((resolve, reject) => {
-        return signInWithPopup(redirectUri, clientId).then((code) => {
-            return fetchAccessTokens(code, redirectUri, clientId, clientSecret).then((tokens) => {
+        console.log(refresh);
+        if (refresh) {
+            return fetchAccessTokens(redirectUri, clientId, clientSecret, refresh).then((tokens) => {
                 resolve(tokens);
                 return tokens;
             }).catch((error) => {
                 reject(error);
             });
-        }).catch((error) => {
-            reject(error);
-        });
+        } else if (!refresh) {
+            return signInWithPopup(redirectUri, clientId).then((code) => {
+                return fetchAccessTokens(redirectUri, clientId, clientSecret, refresh, code).then((tokens) => {
+                    resolve(tokens);
+                    return tokens;
+                }).catch((error) => {
+                    reject(error);
+                });
+            }).catch((error) => {
+                reject(error);
+            });
+        }
     });
 }
 
@@ -73,14 +83,23 @@ export function signInWithPopup (redirect_uri: string, client_id: string): Promi
     })
 }
 
-export async function fetchAccessTokens (code: string | number | boolean | readonly string[] | readonly number[] | readonly boolean[], redirect_uri: string, client_id: string, client_secret: string): Promise<Record<string, any>> {
-    const response = await fetch(GOOGLE_TOKEN_URL + `?${qs.stringify({
-        code,
-        client_id: client_id,
-        redirect_uri: redirect_uri,
-        grant_type: 'authorization_code',
-        client_secret
-    })}`, {
+export async function fetchAccessTokens (redirect_uri: string, client_id: string, client_secret: string, refresh: string = null, code: string | number | boolean | readonly string[] | readonly number[] | readonly boolean[] = null): Promise<Record<string, any>> {
+    const opts = refresh ?
+        {
+            client_id: client_id,
+            redirect_uri: redirect_uri,
+            grant_type: 'refresh_token',
+            client_secret,
+            refresh_token: refresh
+        } :
+        {
+            code,
+            client_id: client_id,
+            redirect_uri: redirect_uri,
+            grant_type: 'authorization_code',
+            client_secret
+        };
+    const response = await fetch(GOOGLE_TOKEN_URL + `?${qs.stringify(opts)}`, {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },

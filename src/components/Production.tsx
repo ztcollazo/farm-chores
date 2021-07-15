@@ -18,7 +18,7 @@ const a = [{month: 'numeric'}, {day: 'numeric'}, {year: 'numeric'}];
 
 const doc = new GoogleSpreadsheet(process.env.GOOGLE_SPREADSHEET_ID);
 
-const Production: React.FC = () => {
+const Production: React.FC<{className?: string}> = ({className}) => {
     let sheets: Record<string, GoogleSpreadsheetWorksheet> = {};
     let sheet: GoogleSpreadsheetWorksheet = null;
     const [type, setType] = React.useState("button");
@@ -75,15 +75,22 @@ const Production: React.FC = () => {
                 } catch (e) {
                     console.log(e);
                     if (e.toString().includes("[401]")) {
-                        setToken("");
+                        console.log(refreshToken);
+                        const refresh = refreshToken ?? localStorage.getItem("google_refresh_token")
+                        if (refresh) {
+                            login(refresh)
+                        } else {
+                            setToken("");
+                        }
                     }
                 }
             })();
         }
     }, [token]);
 
-    const authorize: React.MouseEventHandler<HTMLButtonElement> = (event) => {
-        googleSignIn("http://localhost:3000/main_window", key, secret).then((tokens) => {
+    const login = (refresh: string = null): void => {
+        console.log(refresh);
+        googleSignIn("http://localhost:3000/main_window", key, secret, refresh).then((tokens) => {
             console.log(tokens);
             if (tokens.access_token) {
                 setToken(tokens.access_token);
@@ -105,6 +112,10 @@ const Production: React.FC = () => {
             setTokens(tokens);
             (async () => await doc.loadInfo())();
         });
+    }
+
+    const authorize: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+        login(null);
     }
 
     const [state, mutate] = useAsyncFn(async (vals: Record<string, number>): Promise<GoogleSpreadsheetRow> => {
@@ -239,21 +250,19 @@ const Production: React.FC = () => {
     console.log(dailyValues);
 
     return (
-        <Card style={{
-            minHeight: "50vh",
-            maxHeight: "66vh",
-            height: "100%"
-        }}>
+        <Card className={className}>
             {
-                token ? <div className="w-full grid" style={{gridTemplateColumns: "50% 50%"}}>
+                token ? <div className="grid w-full mt-4" style={{gridTemplateRows: "80% 20%"}}>
+                    <div className="w-full grid overflow-scroll scrollbar-none scroll-snap-parent" style={{gridTemplateColumns: "50% 50%"}}>
                     {
                         Object.keys(dailyValues).map((k, i) => {
                             return (
-                                <div key={i} className="w-5/6 m-5">
+                                <div key={i} className="w-5/6 m-5 scroll-snap-child">
                                     <span
                                         className="text-lg w-full font-extralight text-white opacity-60">{humanizeString(k)}</span>
                                     <span className="w-full">
                                        <input min={0}
+                                              step="any"
                                               className="rounded-xl opacity-60 bg-black text-white font-extralight inline-block align-right float-right text-right bg-opacity-10"
                                               value={dailyValues[k]} type="number" onChange={(event) => setDailyValues({
                                            ...dailyValues,
@@ -266,38 +275,22 @@ const Production: React.FC = () => {
                             )
                         })
                     }
-                    {
-                        Object.keys(dailyValues).length % 2 === 0 ?
-                            <>
-                                <input onClick={addField} onKeyUp={typeField} onChange={(event) => setValue(event.target.value)} type={type}
-                                       className="font-extralight m-auto p-3 text-center text-lg border rounded-xl text-white border-white opacity-60"
-                                       style={{
-                                           width: "max-content",
-                                           outline: "none",
-                                           cursor: "pointer",
-                                           backgroundColor: "transparent"
-                                       }} value={value}/>
-                                <button onClick={handleClick}
-                                        className="font-extralight m-auto p-3 text-center text-lg border rounded-xl text-white border-white opacity-60"
-                                        style={{width: "max-content", outline: "none"}}>Submit
-                                </button>
-                            </> :
-                            <>
-                                <div></div>
-                                <input onClick={addField} onKeyUp={typeField} type={type} onChange={(event) => setValue(event.target.value)}
-                                       className="font-extralight m-auto p-3 text-center text-lg border rounded-xl text-white border-white opacity-60"
-                                       style={{
-                                           width: "max-content",
-                                           outline: "none",
-                                           cursor: "pointer",
-                                           backgroundColor: "transparent"
-                                       }} value={value}/>
-                                <button onClick={handleClick}
-                                        className="font-extralight m-auto p-3 text-center text-lg border rounded-xl text-white border-white opacity-60"
-                                        style={{width: "max-content", outline: "none"}}>Submit
-                                </button>
-                            </>
-                    }
+                    </div>
+                    <div className="absolute grid w-full bottom-5" style={{gridTemplateColumns: "50% 50%"}}>
+                        <input onClick={addField} onKeyUp={typeField} onChange={(event) => setValue(event.target.value)} type={type}
+                               className="font-extralight m-auto p-3 text-center text-lg border rounded-xl text-white border-white opacity-60"
+                               style={{
+                                   width: "max-content",
+                                   outline: "none",
+                                   cursor: "pointer",
+                                   backgroundColor: "transparent"
+                               }} value={value}/>
+                        <button onClick={handleClick}
+                                className="font-extralight m-auto p-3 text-center text-lg border rounded-xl text-white border-white opacity-60"
+                                style={{width: "max-content", outline: "none"}}>Submit
+                        </button>
+                    </div>
+                    <div className="" />
                 </div> :
                 <button onClick={authorize} className="m-auto p-3 rounded-xl outline-none border border-white opacity-60 text-white font-extralight text-xl">Authorize Google</button>
             }
