@@ -27,7 +27,7 @@ const Todo: React.FC = () => {
                !token ?
                    <button className="w-3/4 h-10 rounded-2xl m-auto inline" style={{backgroundColor: "#0369A7", color: "#D2E1ED"}} type="button" onClick={() => authorize(trello, setToken, trelloEvents)}>Authorize Trello</button> :
                    <ul>
-                       {cards.sort((a, b) => b.idList === doneListId ? -1 : a.idList === todoListId ? 1 : b.idList === todoListId ? 1 : -1).map((c) => <Checkbox key={c.name} checked={c.idList !== todoListId} onChange={() => updateCard(c)}>{c.name}</Checkbox>)}
+                       {cards.sort((a, b) => a.idList === doneListId ? 1 : a.idList === todoListId ? -1 : b.idList === todoListId ? -1 : 1).map((c) => <Checkbox key={c.name} checked={c.idList !== todoListId} onChange={() => updateCard(c)}>{c.name}</Checkbox>)}
                    </ul>
 
            }
