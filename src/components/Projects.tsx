@@ -108,7 +108,7 @@ const Checklists: React.FC<IChecklistProps> = ({ card, trello, onUpdate, hasUpda
                             <h1 className="text-lg text-white font-extralight opacity-60">{c.name}</h1>
                             <ul>
                                 {
-                                    c.checkItems.map((l: Record<string, any>, s: number) => {
+                                    c.checkItems.sort((a: Record<string, unknown>, b: Record<string, unknown>) => b.state === 'complete' ? -1 : b.state === 'incomplete' ? 1 : a.state === 'incomplete' ? 1 : -1).map((l: Record<string, any>, s: number) => {
                                         return <Checkbox onChange={() => updateCheckItem(c.idCard, l, s)} checked={l.state === 'complete'} key={s}>{l.name}</Checkbox>
                                     })
                                 }
