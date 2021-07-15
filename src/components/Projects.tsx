@@ -140,7 +140,7 @@ const Projects: React.FC = () => {
     trelloEvents.once('token', () => getProjects());
 
     return (
-        <Card style={{minHeight: "34vh", height: "100%", maxHeight: "50%"}}>
+        <Card>
             {
                 !token ?
                     <button className="w-3/4 h-10 rounded-2xl m-auto inline" style={{backgroundColor: "#0369A7", color: "#D2E1ED"}} type="button" onClick={() => authorize(trello, setToken, trelloEvents)}>Authorize Trello</button> :

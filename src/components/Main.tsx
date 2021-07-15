@@ -42,14 +42,9 @@ const Main: React.FC = () => {
                                 <Calendar />
                             </div>
                         </div>
-                        {/*
-                        Add this for testing purposes. Once I get the other
-                        components in, I'll switch those out. Just had to get the scroll
-                        snap 😉
-                    */}
-                        <div id="2" className="scroll-snap-child min-h-screen relative flex flex-col w-full">
+                        <div id="2" style={{gridTemplateRows: "repeat(3, minmax(auto, 33%))"}} className="scroll-snap-child max-h-screen min-h-screen relative grid w-full">
                             <Projects />
-                            <Production />
+                            <Production className="row-span-2" />
                         </div>
                     </div>
                 </GoogleOauthContext.Provider>
