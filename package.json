@@ -1,8 +1,8 @@
 {
   "name": "farm-chores",
   "productName": "Farm Chores Manager",
-  "version": "1.0.1",
-  "description": "My Electron application description",
+  "version": "0.0.2",
+  "description": "A dashboard for tracking todos, weather, projects, production, and more.",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -12,7 +12,7 @@
     "lint": "eslint --ext .ts ."
   },
   "keywords": [],
-  "author": "collazo",
+  "author": "Zachary Collazo",
   "license": "MIT",
   "config": {
     "forge": {
