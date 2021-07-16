@@ -17,7 +17,8 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "executableName": "farm-chores"
+        "executableName": "farm-chores",
+        "icon": "./src/assets/macos/icon-512.icns"
       },
       "makers": [
         {
@@ -29,7 +30,7 @@
         {
           "name": "@electron-forge/maker-dmg",
           "config": {
-            "icon": "./src/assets/macos/icon-512.png",
+            "icon": "./src/assets/macos/icon-512.icns",
             "name": "Farm Chores Manager"
           }
         },
