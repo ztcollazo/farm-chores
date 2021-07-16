@@ -29,7 +29,7 @@
         {
           "name": "@electron-forge/maker-dmg",
           "config": {
-            "icon": "./src/assets/icon.png",
+            "icon": "./src/assets/macos/icon-512.png",
             "name": "Farm Chores Manager"
           }
         },
