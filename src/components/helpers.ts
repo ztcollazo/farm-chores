@@ -7,7 +7,7 @@ export class TrelloEvents extends EventEmitter {
     }
 }
 
-export const authorize = (trello: Trello, setState: (value: string) => void, emitter: EventEmitter) => {
+export const authorize = (trello: Trello, setState: (value: string) => void, emitter: EventEmitter): void => {
     trello.authorize({
         persist: true,
         interactive: true,
