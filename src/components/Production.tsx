@@ -161,7 +161,13 @@ const Production: React.FC<{className?: string}> = ({className}) => {
             await doc.loadInfo();
         } catch (e) {
             if (e.toString().includes("[401]")) {
-                authorize(event);
+                console.log(refreshToken);
+                const refresh = refreshToken ?? localStorage.getItem("google_refresh_token")
+                if (refresh) {
+                    login(refresh)
+                } else {
+                    authorize(event);
+                }
             }
         }
         sheets = doc.sheetsByTitle;
