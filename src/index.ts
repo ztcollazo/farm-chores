@@ -10,7 +10,6 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    resizable: true,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -18,7 +17,8 @@ const createWindow = (): void => {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
     },
     title: "Farm Chores Manager",
-    icon: "/static/icon.png"
+    icon: "/static/icon.png",
+    show: false
   });
 
   // and load the index.html of the app.
@@ -27,6 +27,8 @@ const createWindow = (): void => {
   }
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY, {userAgent: 'Chrome'});
   mainWindow.on('page-title-updated', (e) => e.preventDefault());
+  mainWindow.maximize();
+  mainWindow.show();
 };
 
 // This method will be called when Electron has finished
