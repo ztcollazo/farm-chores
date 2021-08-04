@@ -8,7 +8,7 @@ const styles = {
       width: 100%;
       height: auto;
       color: white;
-      border: 2px solid auto;
+      border: 2px solid;
       align-content: start;
       .calendar-body {
         width: 100%;
@@ -20,7 +20,7 @@ const styles = {
       }
     `,
     day: css`
-      border: 1px solid auto;
+      border: 1px solid;
       padding: 0px;
       min-height: max-content;
       height: 86px;

@@ -9,7 +9,7 @@ const Todo: React.FC = () => {
     const [cards, setCards] = React.useState([]);
 
     trelloEvents.once('token', (token) => getCards());
-    trelloEvents.on('card-updated', (res, cardId) => setCards(cards.filter((c) => c.id !== cardId).concat([res])))
+    trelloEvents.on('card-updated', (res, cardId) => setCards(cards.filter((c) => c.id !== cardId).concat([res])));
 
     const getCards = () => {
         trello.getBoardCards(todoBoardId,{}, setCards, console.error);

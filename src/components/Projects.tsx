@@ -12,17 +12,17 @@ interface IProjectProps {
     percent: number,
     trello: Trello,
     onUpdate: () => void,
-    hasUpdated: boolean
+    shouldUpdate: boolean
 }
 
 interface IChecklistProps {
     card: Record<string, any>
     trello: Trello,
     onUpdate: () => void,
-    hasUpdated: boolean
+    shouldUpdate: boolean
 }
 
-const Project: React.FC<IProjectProps> = ({card, percent, trello, onUpdate, hasUpdated}) => {
+const Project: React.FC<IProjectProps> = ({card, percent, trello, onUpdate, shouldUpdate}) => {
     const [open, setOpen] = React.useState(false);
 
     return (
@@ -56,14 +56,14 @@ const Project: React.FC<IProjectProps> = ({card, percent, trello, onUpdate, hasU
                 {/*    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M18.3 5.71c-.39-.39-1.02-.39-1.41 0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"/></svg>*/}
                 {/*</span>*/}
                 <div>
-                    <Checklists card={card} onUpdate={onUpdate} hasUpdated={hasUpdated} trello={trello} />
+                    <Checklists card={card} onUpdate={onUpdate} shouldUpdate={shouldUpdate} trello={trello} />
                 </div>
             </Rodal>
         </div>
     );
 }
 
-const Checklists: React.FC<IChecklistProps> = ({ card, trello, onUpdate, hasUpdated}) => {
+const Checklists: React.FC<IChecklistProps> = ({ card, trello, onUpdate, shouldUpdate}) => {
     const [checklists, setChecklists] = React.useState([]);
 
     React.useEffect(() => {
@@ -90,7 +90,7 @@ const Checklists: React.FC<IChecklistProps> = ({ card, trello, onUpdate, hasUpda
                         ).checkItems.splice(i, 1, res)
                     )
                 );
-                if (!hasUpdated) {
+                if (!shouldUpdate) {
                     onUpdate();
                 }
             },
@@ -124,14 +124,14 @@ const Checklists: React.FC<IChecklistProps> = ({ card, trello, onUpdate, hasUpda
 const Projects: React.FC = () => {
     const [cards, setCards] = React.useState([]);
     const {trelloInstance: trello, setToken, token, trelloEvents} = React.useContext(TrelloContext);
-    const [hasUpdated, setHasUpdated] = React.useState(false);
+    const [shouldUpdate, setShouldUpdate] = React.useState(false);
 
     React.useEffect(() => {
-        if (hasUpdated) {
+        if (shouldUpdate) {
             getProjects();
-            setHasUpdated(false);
+            setShouldUpdate(false);
         }
-    }, [hasUpdated]);
+    }, [shouldUpdate]);
 
     const getProjects = () => {
         trello.getBoardCards(projectBoardId,{}, setCards, console.error);
@@ -148,7 +148,7 @@ const Projects: React.FC = () => {
                         {
                             cards.map((c, i) => {
                                 return (
-                                    <Project hasUpdated={hasUpdated} onUpdate={() => setHasUpdated(true)} key={i} card={c} percent={(c.badges.checkItemsChecked / c.badges.checkItems) * 100} trello={trello} />
+                                    <Project shouldUpdate={shouldUpdate} onUpdate={() => setShouldUpdate(true)} key={i} card={c} percent={(c.badges.checkItemsChecked / c.badges.checkItems) * 100} trello={trello} />
                                 )
                             })
                         }

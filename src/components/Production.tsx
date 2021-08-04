@@ -46,45 +46,47 @@ const Production: React.FC<{className?: string}> = ({className}) => {
         }
     }, []);
 
+    const getInfo = async () => {
+        try {
+            await doc.loadInfo();
+            sheets = doc.sheetsByTitle;
+            sheet = sheets[new Date().getFullYear()];
+            await sheet.loadHeaderRow();
+            const rows = await sheet.getRows();
+            const row = rows[rows.length-1];
+            if (row.Date === join(new Date, a, "/")) {
+                const sub: Record<string, number> = {};
+                const daily: Record<string, number> = {};
+                Object.keys(row).filter((f) => f !== "Date" && !f.startsWith("_")).map((k) => {
+                    sub[k] = row[k];
+                    daily[k] = 0;
+                });
+                setSubmittedValues(sub);
+                setDailyValues(daily);
+            }
+            const dailyHeaders: Record<string, number> = {};
+            sheet.headerValues.filter((f) => f !== "Date" && !f.startsWith("_")).map((k) => {
+                dailyHeaders[k] = dailyValues[k] ? dailyValues[k] : 0;
+            });
+            setDailyValues(dailyHeaders);
+        } catch (e) {
+            console.log(e);
+            if (e.toString().includes("[401]")) {
+                console.log(refreshToken);
+                const refresh = refreshToken ?? localStorage.getItem("google_refresh_token")
+                if (refresh) {
+                    login(refresh)
+                } else {
+                    setToken("");
+                }
+            }
+        }
+    }
+
     React.useEffect(() => {
         if (token) {
             doc.useRawAccessToken(token);
-            (async () => {
-                try {
-                    await doc.loadInfo();
-                    sheets = doc.sheetsByTitle;
-                    sheet = sheets[new Date().getFullYear()];
-                    await sheet.loadHeaderRow();
-                    const rows = await sheet.getRows();
-                    const row = rows[rows.length-1];
-                    if (row.Date === join(new Date, a, "/")) {
-                        const sub: Record<string, number> = {};
-                        const daily: Record<string, number> = {};
-                        Object.keys(row).filter((f) => f !== "Date" && !f.startsWith("_")).map((k) => {
-                            sub[k] = row[k];
-                            daily[k] = 0;
-                        });
-                        setSubmittedValues(sub);
-                        setDailyValues(daily);
-                    }
-                    const dailyHeaders: Record<string, number> = {};
-                    sheet.headerValues.filter((f) => f !== "Date" && !f.startsWith("_")).map((k) => {
-                        dailyHeaders[k] = dailyValues[k] ? dailyValues[k] : 0;
-                    });
-                    setDailyValues(dailyHeaders);
-                } catch (e) {
-                    console.log(e);
-                    if (e.toString().includes("[401]")) {
-                        console.log(refreshToken);
-                        const refresh = refreshToken ?? localStorage.getItem("google_refresh_token")
-                        if (refresh) {
-                            login(refresh)
-                        } else {
-                            setToken("");
-                        }
-                    }
-                }
-            })();
+            (async () => await getInfo())();
         }
     }, [token]);
 
