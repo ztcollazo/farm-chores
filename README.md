@@ -4,7 +4,7 @@ Built with [Electron](https://electronjs.org), [Electron Forge](https://electron
 
 To use:
 
-1. Clone git repo <!-- TODO: Add clone url -->
+1. Clone git repo `git clone https://github.com/ztcollazo/farm-chores.git`
 2. Run `npm install`
 3. Run `npm start`
 
