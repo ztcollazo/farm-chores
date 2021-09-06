@@ -1,6 +1,6 @@
 import * as React from "react";
 import Card from "./Card";
-import {projectBoardId, TrelloContext} from "./context";
+import {projectBoardId, projectDoneListId, TrelloContext} from "./context";
 import {authorize} from "./helpers";
 import Rodal from "rodal";
 import "rodal/lib/rodal.css"
@@ -147,7 +147,7 @@ const Projects: React.FC = () => {
                     <div className="scroll-snap-parent w-full grid grid-cols-3 scrollbar-none overflow-scroll">
                         {
                             cards.map((c, i) => {
-                                return (
+                                return c.idList !== projectDoneListId && (
                                     <Project shouldUpdate={shouldUpdate} onUpdate={() => setShouldUpdate(true)} key={i} card={c} percent={(c.badges.checkItemsChecked / c.badges.checkItems) * 100} trello={trello} />
                                 )
                             })
