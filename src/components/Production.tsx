@@ -25,7 +25,8 @@ const Production: React.FC<{className?: string}> = ({className}) => {
     const [value, setValue] = React.useState("Add Field");
     const [dailyValues, setDailyValues] = React.useState<Record<string, number>>({});
     const [submittedValues, setSubmittedValues] = React.useState<Record<string, number>>({});
-    const {setToken, setRefreshToken, setExpiryDate, setScope, key, setTokens, token, secret, refreshToken, expiryDate, scope} = React.useContext(GoogleOauthContext);
+    const [numUpdates, setNumUpdates] = React.useState(0);
+    const {setToken, setRefreshToken, setExpiryDate, setScope, key, setTokens, token, secret, refreshToken, expiryDate, scope} = React.useContext(GoogleOauthContext)
 
     const isAuthorized = (): boolean => {
         return !!localStorage.getItem("google_access_token");
@@ -69,6 +70,7 @@ const Production: React.FC<{className?: string}> = ({className}) => {
                 dailyHeaders[k] = dailyValues[k] ? dailyValues[k] : 0;
             });
             setDailyValues(dailyHeaders);
+            setNumUpdates(0);
         } catch (e) {
             console.log(e);
             if (e.toString().includes("[401]")) {
@@ -76,6 +78,10 @@ const Production: React.FC<{className?: string}> = ({className}) => {
                 const refresh = refreshToken ?? localStorage.getItem("google_refresh_token")
                 if (refresh) {
                     login(refresh)
+                    if (numUpdates === 0) {
+                        setNumUpdates(1);
+                        await getInfo()
+                    }
                 } else {
                     setToken("");
                 }
