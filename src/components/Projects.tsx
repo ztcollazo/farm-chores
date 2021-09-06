@@ -11,18 +11,18 @@ interface IProjectProps {
     card: Record<string, unknown>,
     percent: number,
     trello: Trello,
-    onUpdate: () => void,
+    beforeUpdate: () => void,
     shouldUpdate: boolean
 }
 
 interface IChecklistProps {
     card: Record<string, any>
     trello: Trello,
-    onUpdate: () => void,
+    beforeUpdate: () => void,
     shouldUpdate: boolean
 }
 
-const Project: React.FC<IProjectProps> = ({card, percent, trello, onUpdate, shouldUpdate}) => {
+const Project: React.FC<IProjectProps> = ({card, percent, trello, beforeUpdate, shouldUpdate}) => {
     const [open, setOpen] = React.useState(false);
 
     return (
@@ -56,14 +56,14 @@ const Project: React.FC<IProjectProps> = ({card, percent, trello, onUpdate, shou
                 {/*    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M18.3 5.71c-.39-.39-1.02-.39-1.41 0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"/></svg>*/}
                 {/*</span>*/}
                 <div>
-                    <Checklists card={card} onUpdate={onUpdate} shouldUpdate={shouldUpdate} trello={trello} />
+                    <Checklists card={card} beforeUpdate={beforeUpdate} shouldUpdate={shouldUpdate} trello={trello} />
                 </div>
             </Rodal>
         </div>
     );
 }
 
-const Checklists: React.FC<IChecklistProps> = ({ card, trello, onUpdate, shouldUpdate}) => {
+const Checklists: React.FC<IChecklistProps> = ({ card, trello, beforeUpdate, shouldUpdate}) => {
     const [checklists, setChecklists] = React.useState([]);
 
     React.useEffect(() => {
@@ -73,6 +73,19 @@ const Checklists: React.FC<IChecklistProps> = ({ card, trello, onUpdate, shouldU
     }, [])
 
     const updateCheckItem = (card: string, c: Record<string, any>, i: number) => {
+        const newData = {...c, state: c.state === 'complete' ? 'incomplete' : 'complete'}
+        setChecklists(
+            checklists.splice(
+                checklists.findIndex(
+                    (a) => a.id === c.idChecklist
+                ),
+                1,
+                checklists.find(
+                    (a) => a.id === c.idChecklist
+                ).checkItems.splice(i, 1, newData)
+            )
+        );
+
         trello.updateCheckItem(
             card,
             c.idChecklist,
@@ -81,17 +94,8 @@ const Checklists: React.FC<IChecklistProps> = ({ card, trello, onUpdate, shouldU
                 value: c.state !== 'complete'
             },
             (res: Record<string, unknown>) => {
-                setChecklists(
-                    checklists.splice(
-                        checklists.findIndex(
-                            (a) => a.id === c.idChecklist
-                        ), 1, checklists.find(
-                                (a) => a.id === c.idChecklist
-                        ).checkItems.splice(i, 1, res)
-                    )
-                );
                 if (!shouldUpdate) {
-                    onUpdate();
+                    beforeUpdate();
                 }
             },
             console.error
@@ -108,9 +112,13 @@ const Checklists: React.FC<IChecklistProps> = ({ card, trello, onUpdate, shouldU
                             <h1 className="text-lg text-white font-extralight opacity-60">{c.name}</h1>
                             <ul>
                                 {
-                                    c.checkItems.sort((a: Record<string, unknown>, b: Record<string, unknown>) => b.state === 'complete' ? -1 : b.state === 'incomplete' ? 1 : a.state === 'incomplete' ? 1 : -1).map((l: Record<string, any>, s: number) => {
-                                        return <Checkbox onChange={() => updateCheckItem(c.idCard, l, s)} checked={l.state === 'complete'} key={s}>{l.name}</Checkbox>
-                                    })
+                                    c.checkItems ?
+                                        c.checkItems.sort((a: Record<string, unknown>, b: Record<string, unknown>) => b.state === 'complete' ? -1 : b.state === 'incomplete' ? 1 : a.state === 'incomplete' ? 1 : -1).map((l: Record<string, any>, s: number) => {
+                                            return <Checkbox onChange={() => updateCheckItem(c.idCard, l, s)} checked={l.state === 'complete'} key={s}>{l.name}</Checkbox>
+                                        }) :
+                                        c.sort((a: Record<string, unknown>, b: Record<string, unknown>) => b.state === 'complete' ? -1 : b.state === 'incomplete' ? 1 : a.state === 'incomplete' ? 1 : -1).map((l: Record<string, any>, s: number) => {
+                                            return <Checkbox onChange={() => updateCheckItem(c.idCard, l, s)} checked={l.state === 'complete'} key={s}>{l.name}</Checkbox>
+                                        })
                                 }
                             </ul>
                         </div>
@@ -148,7 +156,7 @@ const Projects: React.FC = () => {
                         {
                             cards.map((c, i) => {
                                 return c.idList !== projectDoneListId && (
-                                    <Project shouldUpdate={shouldUpdate} onUpdate={() => setShouldUpdate(true)} key={i} card={c} percent={(c.badges.checkItemsChecked / c.badges.checkItems) * 100} trello={trello} />
+                                    <Project shouldUpdate={shouldUpdate} beforeUpdate={() => setShouldUpdate(true)} key={i} card={c} percent={(c.badges.checkItemsChecked / c.badges.checkItems) * 100} trello={trello} />
                                 )
                             })
                         }

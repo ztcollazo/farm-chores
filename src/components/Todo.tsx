@@ -16,6 +16,8 @@ const Todo: React.FC = () => {
     }
 
     const updateCard = (card: Record<string, never>) => {
+        const data = {...card, idList: card.idList === todoListId ? doneListId : todoListId}
+        setCards(cards.filter((c) => c.id !== card.id).concat([data]))
         trello.updateCard(card.id, {idList: card.idList === todoListId ? doneListId : todoListId}, (res: unknown) => {
             trelloEvents.emit('card-updated', res, card.id)
         }, console.error);
